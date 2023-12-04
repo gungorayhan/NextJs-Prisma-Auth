@@ -1,15 +1,16 @@
 'use-client'
 
+import { User } from "@prisma/client"
 import Categories from "./Categories"
 import Logo from "./Logo"
 import UserMenu from "./UserMenu"
 
-const Navbar = () => {
+const Navbar = ({user}:{user: User | null | undefined}) => {
   return (
     <div className="flex items-center justify-between h-16 bg-gray-100 px-7">
         <Logo/>
         <Categories/>
-        <UserMenu/>
+        <UserMenu user={user}/>
     </div>
   )
 }

@@ -35,3 +35,17 @@ experimental:{
 
  ## app -> api -> register -> route.ts 
  ## route.ts -> create request function 
+
+ ## create authOptions -> pages/api/auth->[...nextauth].ts
+
+ ## create actions folder -> getCurrentUser.ts
+
+ ## created user actions folder -> connect action folder from layout 
+
+ ## config login process
+
+ ## create elementModal
+
+ ## npm i world-countries
+
+ ## npm i react-select

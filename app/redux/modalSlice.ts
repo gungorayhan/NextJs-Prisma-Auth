@@ -3,12 +3,14 @@ import type{PayloadAction} from "@reduxjs/toolkit"
 
 interface ModalState{
 regsiterModal:boolean,
-loginModal:boolean
+loginModal:boolean,
+elementModal:boolean
 }
 
 const initialState :ModalState = {
 regsiterModal:false,
-loginModal:false
+loginModal:false,
+elementModal:false,
 }  as ModalState
 
 
@@ -22,12 +24,15 @@ export const modalSlice=createSlice({
         },
         loginModalFunc:(state)=>{
             state.loginModal=!state.loginModal
+        },
+        elementModalFunc:(state)=>{
+            state.elementModal=!state.elementModal
         }
     }
 
 })
 
 
-export const {registerModalFunc,loginModalFunc} = modalSlice.actions
+export const {registerModalFunc,loginModalFunc,elementModalFunc} = modalSlice.actions
 
 export default modalSlice.reducer

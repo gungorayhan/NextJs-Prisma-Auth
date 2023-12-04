@@ -6,8 +6,12 @@ import {FcGoogle} from "react-icons/fc"
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form"
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks"
 import { loginModalFunc, } from "@/app/redux/modalSlice"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { toast } from "react-toastify"
 
 const LoginModel = () => {
+
     const {register, handleSubmit, watch, formState:{errors}} = useForm<FieldValues>({
       defaultValues:{
         email:"",
@@ -15,10 +19,30 @@ const LoginModel = () => {
       }
     })
 
+    const router =useRouter()
+
     const {loginModal} = useAppSelector((state)=>state.modal)
+
     const dispatch = useAppDispatch();
 
-    const onSubmit: SubmitHandler<FieldValues>=(data)=>{}
+    const onSubmit: SubmitHandler<FieldValues>=(data)=>{
+
+      signIn("credentials",{
+        ...data,
+        redirect:false
+      })
+      .then((callback)=>{
+        if(callback?.ok){
+          dispatch(loginModalFunc());
+          router.refresh();
+          toast.success("giriş işlemi başarılıdır")
+        }
+        if(callback?.error){
+          toast.error("Hatalı giriş")
+        }
+      })
+
+    }
     const bodyElement=(
         <div>
           <Input
@@ -56,7 +80,7 @@ const LoginModel = () => {
                 footerElement={footerElement}
                 bodyElement={bodyElement}
                 isOpen={loginModal}
-                onSubmit={() => {handleSubmit(onSubmit) }}
+                onSubmit={handleSubmit(onSubmit)}
                 onClose={() => {dispatch(loginModalFunc()) }}
                 btnLabel='Login'
                 title='Login'
